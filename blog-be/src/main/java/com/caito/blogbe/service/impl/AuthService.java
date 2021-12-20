@@ -1,6 +1,6 @@
 package com.caito.blogbe.service.impl;
 
-import com.caito.blogbe.constants.UserErrorsConstants;
+import com.caito.blogbe.constants.ErrorsConstants;
 import com.caito.blogbe.entity.Role;
 import com.caito.blogbe.entity.User;
 import com.caito.blogbe.exeption.customs.BadRequestException;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.SecondaryTable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,13 +35,13 @@ public class AuthService implements AuthDAO {
     public UserResponse save(UserNew userNew) {
 
         if (userRepository.existsByEmail(userNew.getEmail()))
-            throw new BadRequestException(UserErrorsConstants.USR_MAIL_EXISTS);
+            throw new BadRequestException(ErrorsConstants.USR_MAIL_EXISTS);
         if (userNew.getUsername().isEmpty() || userNew.getUsername() == null)
-            throw new BadRequestException(UserErrorsConstants.USR_NAME_EMPTY);
+            throw new BadRequestException(ErrorsConstants.USR_NAME_EMPTY);
         if (userNew.getEmail().isEmpty() || userNew.getEmail() == null)
-            throw new BadRequestException(UserErrorsConstants.USR_EMAIL_EMPTY);
+            throw new BadRequestException(ErrorsConstants.USR_EMAIL_EMPTY);
         if (userNew.getPassword().isEmpty() || userNew.getPassword() == null)
-            throw new BadRequestException(UserErrorsConstants.USR_PASS_EMPTY);
+            throw new BadRequestException(ErrorsConstants.USR_PASS_EMPTY);
         Set<Role> roles = new HashSet<>();
         if (userNew.getRole().contains("admin"))
             roles.add(roleRepository.findByRoleName(RoleName.ROLE_ADMIN).get());
@@ -50,7 +49,7 @@ public class AuthService implements AuthDAO {
         User user = new User();
         user.setUsername(userNew.getUsername());
         user.setEmail(userNew.getEmail());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(userNew.getPassword()));
         user.setRoles(roles);
         User newUser = userRepository.save(user);
 

@@ -26,9 +26,9 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ResponseEntity>> getAll() throws NotFoundException {
+    public ResponseEntity<List<UserResponse>> getAll() throws NotFoundException {
 
-        return new ResponseEntity<List<ResponseEntity>>((MultiValueMap<String, String>) service.getAll(),HttpStatus.OK);
+        return new ResponseEntity<List<UserResponse>>(service.getAll(),HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

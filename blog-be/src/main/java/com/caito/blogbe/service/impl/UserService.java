@@ -1,8 +1,7 @@
 package com.caito.blogbe.service.impl;
 
-import com.caito.blogbe.constants.UserErrorsConstants;
+import com.caito.blogbe.constants.ErrorsConstants;
 import com.caito.blogbe.entity.User;
-import com.caito.blogbe.exeption.customs.BadRequestException;
 import com.caito.blogbe.mapper.UserResponseMapper;
 import com.caito.blogbe.models.dto.UserResponse;
 import com.caito.blogbe.repository.UserRepository;
@@ -26,7 +25,7 @@ public class UserService implements UserDAO {
     public UserResponse getById(Long id) throws NotFoundException {
 
         User user = repository.findById(id).orElseThrow(()->
-                new NotFoundException(UserErrorsConstants.USR_NOT_FOUND));
+                new NotFoundException(ErrorsConstants.USR_NOT_FOUND));
 
         return responseMapper.userToUserResponse(user);
     }
@@ -34,14 +33,13 @@ public class UserService implements UserDAO {
     @Override
     public List<UserResponse> getAll() throws NotFoundException {
         List<User> users = repository.findAll();
-        if (users.isEmpty()) throw new NotFoundException(UserErrorsConstants.USR_LIST_EMPTY);
         return responseMapper.userListToUserResponseList(users);
     }
 
     @Override
     public void delete(Long id) throws NotFoundException {
         User user = repository.findById(id).orElseThrow(()->
-                new NotFoundException(UserErrorsConstants.USR_NOT_FOUND));
+                new NotFoundException(ErrorsConstants.USR_NOT_FOUND));
         repository.deleteById(id);
     }
 }
