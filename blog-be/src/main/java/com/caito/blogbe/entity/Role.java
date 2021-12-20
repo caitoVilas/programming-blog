@@ -1,6 +1,7 @@
 package com.caito.blogbe.entity;
 
 import com.caito.blogbe.models.RoleName;
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
