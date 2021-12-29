@@ -2,13 +2,14 @@ package com.caito.blogbe.service.impl;
 
 import com.caito.blogbe.constants.ErrorsConstants;
 import com.caito.blogbe.entity.Comment;
+import com.caito.blogbe.entity.Post;
 import com.caito.blogbe.entity.User;
 import com.caito.blogbe.exeption.customs.BadRequestException;
 import com.caito.blogbe.mapper.CommentResponseMapper;
-import com.caito.blogbe.models.ErrorResponse;
 import com.caito.blogbe.models.dto.CommentRequest;
 import com.caito.blogbe.models.dto.CommentResponse;
 import com.caito.blogbe.repository.CommentRepository;
+import com.caito.blogbe.repository.PostRepository;
 import com.caito.blogbe.repository.UserRepository;
 import com.caito.blogbe.service.contracts.CommentDAO;
 import javassist.NotFoundException;
@@ -26,6 +27,8 @@ public class CommentService implements CommentDAO {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private PostRepository postRepository;
+    @Autowired
     private CommentResponseMapper responseMapper;
 
 
@@ -36,9 +39,12 @@ public class CommentService implements CommentDAO {
             throw new BadRequestException(ErrorsConstants.CMT_CONT_NULL);
         User user = userRepository.findById(request.getUser_id()).orElseThrow(() ->
                 new NotFoundException(ErrorsConstants.USR_NOT_FOUND));
+        Post post = postRepository.findById(request.getPost()).orElseThrow(()->
+                new NotFoundException(ErrorsConstants.PST_NOT_FOUND));
         Comment comment = new Comment();
         comment.setContent(request.getContenet());
         comment.setUser(user);
+        comment.setPost(post);
         repository.save(comment);
         return responseMapper.commentToCommentResponse(comment);
     }
@@ -59,6 +65,15 @@ public class CommentService implements CommentDAO {
         List<Comment> comments = repository.findAll();
         return responseMapper.commentListToCommentResponseList(comments);
     }
+
+    @Override
+    public List<CommentResponse> getByPost(Long postId) throws NotFoundException {
+        Post post = postRepository.findById(postId).orElseThrow(()->
+                new NotFoundException(ErrorsConstants.PST_NOT_FOUND));
+        List<Comment> comments = repository.findByPost(post);
+        return responseMapper.commentListToCommentResponseList(comments);
+    }
+
 
     @Override
     @Transactional

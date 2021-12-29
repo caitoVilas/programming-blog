@@ -16,6 +16,8 @@ public class CommentResponse {
     private UserResponse user;
     @ApiModelProperty(value = "content")
     private String content;
+    @ApiModelProperty(name = "post")
+    private PostResponse post;
     @ApiModelProperty(value = "created")
     private LocalDateTime created;
     @ApiModelProperty(value = "updated")

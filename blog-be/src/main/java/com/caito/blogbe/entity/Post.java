@@ -31,9 +31,6 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "comment_id")
-    private Set<Comment> comments;
     @CreationTimestamp
     private LocalDateTime created;
     @UpdateTimestamp

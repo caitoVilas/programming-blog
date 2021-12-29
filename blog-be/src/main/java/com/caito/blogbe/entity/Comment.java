@@ -28,6 +28,9 @@ public class Comment {
     private User user;
     @Column(nullable = false)
     private String content;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "postId")
+    private Post post;
     @CreationTimestamp
     private LocalDateTime created;
     @UpdateTimestamp

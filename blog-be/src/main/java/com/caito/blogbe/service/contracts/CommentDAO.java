@@ -11,5 +11,6 @@ public interface CommentDAO {
     CommentResponse save(CommentRequest request) throws NotFoundException;
     CommentResponse getById(Long id) throws NotFoundException;
     List<CommentResponse> getAll();
+    List<CommentResponse> getByPost(Long postId) throws NotFoundException;
     void delete(Long id) throws NotFoundException;
 }

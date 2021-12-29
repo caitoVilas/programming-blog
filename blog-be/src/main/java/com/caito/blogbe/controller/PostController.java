@@ -1,5 +1,6 @@
 package com.caito.blogbe.controller;
 
+import com.caito.blogbe.exeption.customs.BadRequestException;
 import com.caito.blogbe.models.dto.PostRequest;
 import com.caito.blogbe.models.dto.PostResponse;
 import com.caito.blogbe.service.impl.PostService;
@@ -74,5 +75,18 @@ public class PostController {
     public ResponseEntity<?> delete(@PathVariable Long id) throws NotFoundException {
         service.delete(id);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/search/{text}")
+    @ApiOperation(value = "method that looks for posts that meet the criteria returns a list of PostResponse")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "created"),
+            @ApiResponse(code = 400, message = "bad request"),
+            @ApiResponse(code = 404, message = "not found"),
+            @ApiResponse(code = 500, message = "internal server error")
+    })
+    public ResponseEntity<List<PostResponse>> search(@PathVariable String text) throws BadRequestException {
+
+        return new ResponseEntity<List<PostResponse>>(service.search(text), HttpStatus.OK);
     }
 }

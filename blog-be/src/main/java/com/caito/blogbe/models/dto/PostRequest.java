@@ -14,4 +14,5 @@ public class PostRequest {
     private String content;
     @ApiModelProperty(value = "user_id", required = true, example = "1")
     private Long user_id;
+
 }

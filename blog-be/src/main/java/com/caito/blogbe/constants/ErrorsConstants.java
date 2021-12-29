@@ -15,6 +15,7 @@ public class ErrorsConstants {
     public static final String PST_CONT_NULL = "El post no tiene contenido!";
     public static final String PST_NOT_FOUND = "Post no encontrado";
     public static final String PST_LIST_EMPTY = "No hay Post en la base!";
+    public static final String PST_SEARCH_EMPTY ="No se recibe criterio de busqueda!";
 
     // COMMENT
 

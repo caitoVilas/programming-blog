@@ -76,4 +76,18 @@ public class CommentController {
         service.delete(id);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @GetMapping("/post/{postId}")
+    @ApiOperation(value = "method that returns a list of CommentResponse for a post")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "created"),
+            @ApiResponse(code = 400, message = "bad request"),
+            @ApiResponse(code = 404, message = "not found"),
+            @ApiResponse(code = 500, message = "internal server error")
+    })
+    public ResponseEntity<List<CommentResponse>> getByPost(@PathVariable Long postId) throws NotFoundException {
+
+        return new ResponseEntity<List<CommentResponse>>(service.getByPost(postId), HttpStatus.OK);
+    }
+
 }

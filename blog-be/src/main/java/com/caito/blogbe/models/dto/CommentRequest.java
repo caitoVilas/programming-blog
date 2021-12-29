@@ -14,5 +14,7 @@ public class CommentRequest {
     private Long user_id;
     @ApiModelProperty(name = "content", required = true, example = "comentario sobre el post")
     private String contenet;
+    @ApiModelProperty(name = "post_id", required = true, example = "1")
+    private Long post;
 
 }

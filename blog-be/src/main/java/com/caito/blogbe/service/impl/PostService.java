@@ -64,6 +64,15 @@ public class PostService implements PostDAO {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<PostResponse> search(String text) throws BadRequestException {
+        if (text == null || text.isEmpty())
+            throw new BadRequestException(ErrorsConstants.PST_SEARCH_EMPTY);
+        List<Post> posts = repository.findByTitleContaining(text);
+        return responseMapper.postListToPostResponseList(posts);
+    }
+
+    @Override
     @Transactional
     public void delete(long id) throws NotFoundException {
         Post post = repository.findById(id).orElseThrow(() ->

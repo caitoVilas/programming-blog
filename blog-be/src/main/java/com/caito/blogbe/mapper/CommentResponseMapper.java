@@ -1,9 +1,9 @@
 package com.caito.blogbe.mapper;
 
 import com.caito.blogbe.entity.Comment;
-import com.caito.blogbe.models.dto.CommentRequest;
 import com.caito.blogbe.models.dto.CommentResponse;
 import org.mapstruct.Mapper;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
