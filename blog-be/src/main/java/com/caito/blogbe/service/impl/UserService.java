@@ -42,4 +42,13 @@ public class UserService implements UserDAO {
                 new NotFoundException(ErrorsConstants.USR_NOT_FOUND));
         repository.deleteById(id);
     }
+
+    @Override
+    public User findByUsername(String email) throws NotFoundException {
+
+        User user = repository.findByUsername(email).orElseThrow(()->
+                new NotFoundException(ErrorsConstants.USR_NOT_FOUND));
+
+        return user;
+    }
 }
